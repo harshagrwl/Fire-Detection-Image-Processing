@@ -15,7 +15,7 @@ image = cv2.imread(args["image"])
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (11, 11), 0)
 
-thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)[1]
+thresh = cv2.threshold(blurred, 150, 255, cv2.THRESH_BINARY)[1]
 
 thresh = cv2.erode(thresh, None, iterations=2)
 thresh = cv2.dilate(thresh, None, iterations=4)
@@ -31,7 +31,7 @@ for label in np.unique(labels):
 	labelMask[labels == label] = 255
 	numPixels = cv2.countNonZero(labelMask)
 
-	if numPixels > 300:
+	if numPixels > 200:
 		mask = cv2.add(mask, labelMask)
 
 cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
