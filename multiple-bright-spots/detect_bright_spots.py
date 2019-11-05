@@ -8,11 +8,11 @@ import cv2
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True,
-	help="path to the image file")
+	help="the required path for finding image")
 args = vars(ap.parse_args())
 
-image = cv2.imread(args["image"])
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+img = cv2.imread(args["image"])
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (11, 11), 0)
 
 thresh = cv2.threshold(blurred, 150, 255, cv2.THRESH_BINARY)[1]
@@ -42,10 +42,10 @@ cnts = contours.sort_contours(cnts)[0]
 for (i, c) in enumerate(cnts):
 	(x, y, w, h) = cv2.boundingRect(c)
 	((cX, cY), radius) = cv2.minEnclosingCircle(c)
-	cv2.circle(image, (int(cX), int(cY)), int(radius),
+	cv2.circle(img, (int(cX), int(cY)), int(radius),
 		(0, 0, 255), 3)
-	cv2.putText(image, "#{}".format(i + 1), (x, y - 15),
+	cv2.putText(img, "#{}".format(i + 1), (x, y - 15),
 		cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
-cv2.imshow("Image", image)
+cv2.imshow("Output Image(Picture)", img)
 cv2.waitKey(0)
